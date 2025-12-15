@@ -14,23 +14,18 @@ module trng_top_tb;
         .random_valid(random_valid)
     );
 
-    // Clock generation: 100 MHz
     always #5 clk = ~clk;
 
     initial begin
         clk = 0;
         enable = 0;
-
-        #20;
-        enable = 1;
-
-        #1000;
-        $finish;
+        #20 enable = 1;
+        #1000 $finish;
     end
 
     initial begin
         $dumpfile("trng_wave.vcd");
-        $dumpvars(0, trng_top_tb);
+        $dumpvars(1, dut);
     end
 
 endmodule
