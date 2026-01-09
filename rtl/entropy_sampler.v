@@ -1,21 +1,13 @@
-// Entropy Sampler
-// Synchronizes asynchronous entropy to system clock
-
+`timescale 1ns / 1ps
 module entropy_sampler (
     input  wire clk,
+    input  wire rst,
     input  wire enable,
     input  wire entropy_in,
     output reg  sampled_bit
 );
-
-    reg sync1, sync2;
-
     always @(posedge clk) begin
-        if (enable) begin
-            sync1       <= entropy_in;
-            sync2       <= sync1;
-            sampled_bit <= sync2;
-        end
+        if (rst) sampled_bit <= 1'b0;
+        else if (enable) sampled_bit <= entropy_in;
     end
-
 endmodule
